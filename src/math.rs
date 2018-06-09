@@ -14,21 +14,15 @@ where
     }
 }
 
-pub fn digitsum<T>(n: &T) -> T
+pub fn digitsum<T>(mut n: T) -> T
 where
-    T: Add<Output = T>
-        + Rem<usize, Output = T>
-        + Div<usize, Output = T>
-        + Ord
-        + Clone
-        + From<usize>,
+    T: Clone + num::Integer + num::Unsigned + Rem<usize, Output = T> + DivAssign<usize> + AddAssign,
 {
-    let mut v = n.clone();
-    let mut sum: T = T::from(0);
-    let zero = T::from(0);
-    while &v > &zero {
-        sum = sum + (v.clone() % 10);
-        v = v / 10;
+    let mut sum = T::zero();
+    let zero = T::zero();
+    while n > zero {
+        sum += n.clone() % 10;
+        n /= 10;
     }
     sum
 }
