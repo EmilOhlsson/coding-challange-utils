@@ -65,13 +65,13 @@ where
 }
 
 pub fn divisors(n: &usize) -> Vec<usize> {
-    (2..(*n / 2 + 2))
+    (2..=(*n / 2 + 1))
         .filter(|d| *n % d == 0)
         .collect::<Vec<usize>>()
 }
 
 pub fn divisors_proper(n: &usize) -> Vec<usize> {
-    (1..(*n / 2 + 1))
+    (1..=(*n / 2))
         .filter(|d| *n % d == 0)
         .collect::<Vec<usize>>()
 }
