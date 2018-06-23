@@ -1,0 +1,8 @@
+[package]
+name = "cch_utils"
+version = "0.1.0"
+authors = ["Emil Ohlsson <emil@kottland.net>"]
+
+[dependencies]
+num = "0.1.41"
+clipboard ="0.4.2"
