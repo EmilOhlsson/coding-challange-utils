@@ -1,5 +1,5 @@
 [package]
-name = "cch_utils"
+name = "coding-challenge-utils"
 version = "0.1.0"
 authors = ["Emil Ohlsson <emil@kottland.net>"]
 
