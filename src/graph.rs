@@ -75,6 +75,9 @@ where
     return path;
 }
 
+/// Search for the shortest path between two Vertices.
+/// Uses `Rc`, as it is otherwise hard to know size of
+/// objects at compile time.
 pub fn search<T>(start: Rc<T>, goal: Rc<T>) -> Option<Vec<Rc<T>>>
 where
     T: Vertex + Hash + Eq + Debug,
@@ -96,16 +99,12 @@ where
     while !open.is_empty() {
         let current = open.pop().unwrap();
         if *current.vertex == *goal {
+            // Path found, reconstruct path
             return Some(reconstruct_path(current.vertex, came_from));
         }
 
         closed.insert(current.vertex.clone());
-        for neighbor in current.vertex.neighbors() {
-            // TODO use filter instead
-            if closed.contains(&neighbor) {
-                continue;
-            }
-
+        for neighbor in current.vertex.neighbors().iter().filter(|&n| !closed.contains(n)) {
             let tentative_gscore = g_score[&current.vertex] + 1;
             let tentative_fscore = tentative_gscore + neighbor.distance(goal.as_ref());
 
