@@ -4,8 +4,9 @@ pub extern crate num;
 use clipboard::ClipboardContext;
 use clipboard::ClipboardProvider;
 
-pub mod checkers;
 mod constants;
+pub mod checkers;
+pub mod coord;
 pub mod graph;
 pub mod math;
 pub mod representations;
