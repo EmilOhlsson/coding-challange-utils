@@ -1,3 +1,5 @@
+use std::ops::Add;
+
 #[derive(Clone, Debug, Hash, PartialEq, Eq)]
 pub struct Cartesian {
     pub x: i32,
@@ -43,4 +45,36 @@ impl Cartesian {
         let y_dist = (self.y - other.y).abs() as usize;
         x_dist + y_dist
     }
+}
+
+impl Add for Cartesian {
+    type Output = Cartesian;
+
+    fn add(self, other: Cartesian) -> Cartesian {
+        Cartesian {
+            x: self.x + other.x,
+            y: self.y + other.y,
+        }
+    }
+}
+
+impl<'a>  Add for &'a Cartesian {
+    type Output = Cartesian;
+
+    fn add(self, other: Self) -> Cartesian {
+        Cartesian {
+            x: self.x + other.x,
+            y: self.y + other.y,
+        }
+    }
+}
+
+#[test]
+fn test_cartesian() {
+    let a = Cartesian::new(1, 1);
+    let b = Cartesian::new(2, 2);
+    let c = Cartesian::new(3, 3);
+
+    assert_eq!(&a + &b, c);
+    assert_eq!(a + b, c);
 }
