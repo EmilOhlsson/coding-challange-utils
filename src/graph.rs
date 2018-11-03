@@ -98,7 +98,7 @@ where
 
     while !open.is_empty() {
         let current = open.pop().unwrap();
-        if *current.vertex == *goal {
+        if current.vertex.distance(&*goal) == 0 {
             // Path found, reconstruct path
             return Some(reconstruct_path(current.vertex, came_from));
         }
