@@ -58,7 +58,7 @@ impl Add for Cartesian {
     }
 }
 
-impl<'a>  Add for &'a Cartesian {
+impl<'a> Add for &'a Cartesian {
     type Output = Cartesian;
 
     fn add(self, other: Self) -> Cartesian {

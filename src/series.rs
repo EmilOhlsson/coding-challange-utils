@@ -161,7 +161,8 @@ where
             let zero = T::from(0);
             let inc = T::from(2);
             let mut candidate = *self.primes.last().unwrap() + inc;
-            while self.primes
+            while self
+                .primes
                 .iter()
                 .take_while(|&p| *p < candidate / inc + inc)
                 .find(|&p| candidate % *p == zero)
