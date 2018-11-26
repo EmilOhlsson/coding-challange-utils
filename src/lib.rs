@@ -5,7 +5,8 @@ use clipboard::ClipboardContext;
 use clipboard::ClipboardProvider;
 
 pub mod checkers;
-mod constants;
+pub mod constants;
+pub mod containers;
 pub mod coord;
 pub mod graph;
 pub mod math;
