@@ -1,6 +1,6 @@
 [package]
 name = "coding-challenge-utils"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Emil Ohlsson <emil@kottland.net>"]
 
 [dependencies]

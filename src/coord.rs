@@ -1,4 +1,6 @@
 use std::ops::Add;
+use std::str::FromStr;
+use std::num::ParseIntError;
 
 #[derive(Clone, Debug, Hash, PartialEq, Eq)]
 pub struct Cartesian {
@@ -44,6 +46,22 @@ impl Cartesian {
         let x_dist = (self.x - other.x).abs() as usize;
         let y_dist = (self.y - other.y).abs() as usize;
         x_dist + y_dist
+    }
+}
+
+impl FromStr for Cartesian {
+    type Err = ParseIntError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let coords: Vec<&str> = s.trim_matches(|p| p == '(' || p == ')' )
+                                 .split(',')
+                                 .map(|t| t.trim())
+                                 .collect();
+
+        let x_fromstr = coords[0].parse::<i32>()?;
+        let y_fromstr = coords[1].parse::<i32>()?;
+
+        Ok(Cartesian { x: x_fromstr, y: y_fromstr })
     }
 }
 
