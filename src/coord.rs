@@ -1,6 +1,6 @@
-use std::ops::Add;
-use std::str::FromStr;
 use std::num::ParseIntError;
+use std::ops::{Add, AddAssign, Mul, MulAssign};
+use std::str::FromStr;
 
 #[derive(Clone, Debug, Hash, PartialEq, Eq)]
 pub struct Cartesian {
@@ -53,15 +53,19 @@ impl FromStr for Cartesian {
     type Err = ParseIntError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let coords: Vec<&str> = s.trim_matches(|p| p == '(' || p == ')' )
-                                 .split(',')
-                                 .map(|t| t.trim())
-                                 .collect();
+        let coords: Vec<&str> = s
+            .trim_matches(|p| p == '(' || p == ')')
+            .split(',')
+            .map(|t| t.trim())
+            .collect();
 
         let x_fromstr = coords[0].parse::<i32>()?;
         let y_fromstr = coords[1].parse::<i32>()?;
 
-        Ok(Cartesian { x: x_fromstr, y: y_fromstr })
+        Ok(Cartesian {
+            x: x_fromstr,
+            y: y_fromstr,
+        })
     }
 }
 
@@ -87,12 +91,68 @@ impl<'a> Add for &'a Cartesian {
     }
 }
 
+impl AddAssign for Cartesian {
+    fn add_assign(&mut self, other: Cartesian) {
+        self.x += other.x;
+        self.y += other.y;
+    }
+}
+
+impl<'a> AddAssign<&'a Cartesian> for Cartesian {
+    fn add_assign(&mut self, other: &Cartesian) {
+        self.x += other.x;
+        self.y += other.y;
+    }
+}
+
+impl Mul<i32> for Cartesian {
+    type Output = Cartesian;
+
+    fn mul(self, other: i32) -> Cartesian {
+        Cartesian {
+            x: self.x * other,
+            y: self.y * other,
+        }
+    }
+}
+
+impl Mul<i32> for &Cartesian {
+    type Output = Cartesian;
+
+    fn mul(self, other: i32) -> Cartesian {
+        Cartesian {
+            x: self.x * other,
+            y: self.y * other,
+        }
+    }
+}
+
+impl MulAssign<i32> for Cartesian {
+    fn mul_assign(&mut self, other: i32) {
+        self.x *= other;
+        self.y *= other;
+    }
+}
+
 #[test]
-fn test_cartesian() {
+fn test_add() {
     let a = Cartesian::new(1, 1);
     let b = Cartesian::new(2, 2);
     let c = Cartesian::new(3, 3);
+    let mut d = Cartesian::new(2, 2);
 
     assert_eq!(&a + &b, c);
+    d += &a;
+    assert_eq!(&d, &c);
     assert_eq!(a + b, c);
+}
+
+#[test]
+fn test_ops() {
+    let mut a = Cartesian::new(2, 2);
+    let b = Cartesian::new(10, 10);
+
+    assert_eq!(&a * 5, b);
+    a *= 5;
+    assert_eq!(&a, &b);
 }
