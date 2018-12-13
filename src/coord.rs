@@ -2,7 +2,7 @@ use std::num::ParseIntError;
 use std::ops::{Add, AddAssign, Mul, MulAssign};
 use std::str::FromStr;
 
-#[derive(Clone, Debug, Hash, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Hash, PartialEq, Eq)]
 pub struct Cartesian {
     pub x: i32,
     pub y: i32,
