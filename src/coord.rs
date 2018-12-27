@@ -1,6 +1,7 @@
 use std::num::ParseIntError;
 use std::ops::{Add, AddAssign, Mul, MulAssign};
 use std::str::FromStr;
+use std::fmt;
 
 #[derive(Clone, Copy, Debug, Hash, PartialEq, Eq)]
 pub struct Cartesian {
@@ -66,6 +67,12 @@ impl FromStr for Cartesian {
             x: x_fromstr,
             y: y_fromstr,
         })
+    }
+}
+
+impl fmt::Display for Cartesian {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
     }
 }
 
